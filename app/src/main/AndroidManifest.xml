@@ -13,6 +13,7 @@
         android:theme="@style/Theme.Interfaces"
         tools:targetApi="31">
         <activity android:name=".PantallaSelecionarMascota"/>
+        <activity android:name=".PantallaPrincipal"/>
         <activity
             android:name=".MainActivity"
             android:exported="true"
