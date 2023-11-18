@@ -121,7 +121,7 @@ class PantallaSelecionarMascota : ComponentActivity() {
                 )
                 Column {
                     Text(
-                        text = "Nombre", modifier = Modifier.padding(start = 15.dp, top = 25.dp),
+                        text = "Carlitos", modifier = Modifier.padding(start = 15.dp, top = 25.dp),
                         fontWeight = FontWeight.Bold
                     )
                     Text(
