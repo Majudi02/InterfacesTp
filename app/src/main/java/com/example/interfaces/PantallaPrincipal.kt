@@ -45,6 +45,7 @@ import androidx.compose.ui.modifier.ModifierLocal
 import androidx.compose.ui.modifier.modifierLocalConsumer
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -58,8 +59,7 @@ class PantallaPrincipal : ComponentActivity() {
         setContent {
             InterfacesTheme {
                 Surface(
-                    modifier = Modifier.fillMaxSize(),
-                    color = MaterialTheme.colorScheme.background
+                    modifier = Modifier.fillMaxSize(), color = MaterialTheme.colorScheme.background
                 ) {
                     PantallaPrincipalScreen()
                 }
@@ -70,21 +70,18 @@ class PantallaPrincipal : ComponentActivity() {
     @Composable
     fun PantallaPrincipalScreen() {
         Column(
-            modifier = Modifier
-                .fillMaxSize()
+            modifier = Modifier.fillMaxSize()
         ) {
 
             Spacer(modifier = Modifier.height(35.dp))
 
-            //**************** Select()
-
-            Spacer(modifier = Modifier.height(5.dp))
             Text(
                 text = "Carlitos",
                 modifier = Modifier.align(CenterHorizontally),
                 fontWeight = FontWeight.Bold,
                 fontSize = 22.sp
             )
+            Spacer(modifier = Modifier.height(5.dp))
             Image(
                 painterResource(id = R.drawable.perro_perfil),
                 contentDescription = "",
@@ -95,35 +92,32 @@ class PantallaPrincipal : ComponentActivity() {
             )
 
 
-            Spacer(modifier = Modifier.height(80.dp))
+            Spacer(modifier = Modifier.height(70.dp))
 
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(horizontal = 16.dp)
             ) {
-                Box(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(90.dp)
-                        .padding(vertical = 10.dp)
-                        .background(
-                            color = Color.LightGray,
-                            shape = RoundedCornerShape(20.dp)
-                        ).clickable{
-                            startActivity(
-                                Intent(
-                                    this@PantallaPrincipal,
-                                    PantallaSacarTurno::class.java
-                                )
+                Box(modifier = Modifier
+                    .fillMaxWidth()
+                    .height(90.dp)
+                    .padding(vertical = 10.dp)
+                    .background(
+                        color = Color.LightGray, shape = RoundedCornerShape(20.dp)
+                    )
+                    .clickable {
+                        startActivity(
+                            Intent(
+                                this@PantallaPrincipal, PantallaSacarTurno::class.java
                             )
-                        }
-                ) {
+                        )
+                    }) {
                     Text(
                         text = "Pedir Turno",
-                        modifier = Modifier
-                            .align(Alignment.Center),
-                        fontSize = 20.sp
+                        modifier = Modifier.align(Alignment.Center),
+                        fontSize = 20.sp,
+                        fontFamily = FontFamily.Default
                     )
                 }
 
@@ -140,15 +134,14 @@ class PantallaPrincipal : ComponentActivity() {
                             .height(90.dp)
                             .padding(start = 5.dp)
                             .background(
-                                color = Color.LightGray,
-                                shape = RoundedCornerShape(20.dp)
+                                color = Color.LightGray, shape = RoundedCornerShape(20.dp)
                             )
                     ) {
                         Text(
                             text = "Laboratorios",
-                            modifier = Modifier
-                                .align(Alignment.Center),
-                            fontSize = 18.sp
+                            modifier = Modifier.align(Alignment.Center),
+                            fontSize = 18.sp,
+                            fontFamily = FontFamily.Default
                         )
                     }
 
@@ -159,8 +152,7 @@ class PantallaPrincipal : ComponentActivity() {
                             .weight(1f)
                             .height(90.dp)
                             .background(
-                                color = Color.LightGray,
-                                shape = RoundedCornerShape(20.dp)
+                                color = Color.LightGray, shape = RoundedCornerShape(20.dp)
                             )
                     ) {
                         Text(
@@ -168,7 +160,8 @@ class PantallaPrincipal : ComponentActivity() {
                             modifier = Modifier
                                 .align(Alignment.Center)
                                 .padding(start = 5.dp),
-                            fontSize = 18.sp
+                            fontSize = 18.sp,
+                            fontFamily = FontFamily.Default
                         )
                     }
 
@@ -179,15 +172,14 @@ class PantallaPrincipal : ComponentActivity() {
                             .weight(1f)
                             .height(90.dp)
                             .background(
-                                color = Color.LightGray,
-                                shape = RoundedCornerShape(20.dp)
+                                color = Color.LightGray, shape = RoundedCornerShape(20.dp)
                             )
                     ) {
                         Text(
                             text = "Historia Clínica",
-                            modifier = Modifier
-                                .align(Alignment.Center),
-                            fontSize = 15.sp
+                            modifier = Modifier.align(Alignment.Center),
+                            fontSize = 15.sp,
+                            fontFamily = FontFamily.Default
                         )
                     }
                 }
@@ -198,11 +190,38 @@ class PantallaPrincipal : ComponentActivity() {
                         .fillMaxSize()
                         .background(color = Color.Transparent)
                 ) {
-                    Text(
-                        text = "Proximos Turnos",
-                        modifier = Modifier.align(Alignment.TopStart),
-                        fontSize = 20.sp, fontWeight = FontWeight.Bold
-                    )
+                    Column(modifier = Modifier.align(Alignment.TopStart)) {
+                        Text(
+                            text = "Proximos Turnos",
+                            fontSize = 20.sp,
+                            fontWeight = FontWeight.Bold,
+                            fontFamily = FontFamily.Monospace
+                        )
+                        Spacer(modifier = Modifier.height(20.dp))
+                        Row {
+                            Image(
+                                painterResource(id = R.drawable.calendario),
+                                contentDescription = "",
+                                modifier = Modifier.size(40.dp)
+                            )
+                            Text(
+                                text = "29/11/2023",
+                                modifier = Modifier.padding(start = 20.dp, top = 7.dp)
+                            )
+                        }
+                        Spacer(modifier = Modifier.height(20.dp))
+                        Row {
+                            Image(
+                                painterResource(id = R.drawable.vacuna),
+                                contentDescription = "",
+                                modifier = Modifier.size(40.dp)
+                            )
+                            Text(
+                                text = "3/12/2023",
+                                modifier = Modifier.padding(start = 20.dp, top = 7.dp)
+                            )
+                        }
+                    }
                 }
 
             }
@@ -210,10 +229,6 @@ class PantallaPrincipal : ComponentActivity() {
 
 
     }
-
-
-
-
 
 
 }

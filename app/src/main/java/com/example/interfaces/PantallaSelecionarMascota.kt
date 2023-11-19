@@ -35,6 +35,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -72,20 +73,19 @@ class PantallaSelecionarMascota : ComponentActivity() {
                     painterResource(id = R.drawable.perfil),
                     contentDescription = "",
                     modifier = Modifier
-                        .size(90.dp)
+                        .size(70.dp)
                         .padding(start = 15.dp)
                 )
                 Text(
                     text = "Bienvenido Rigoberto",
-                    modifier = Modifier.padding(start = 5.dp, top = 25.dp),
-                    fontSize = 20.sp,
+                    modifier = Modifier.padding(start = 5.dp, top = 20.dp),
+                    fontSize = 16.sp,
                     textAlign = TextAlign.Center,
-                    fontWeight = FontWeight.Bold,
                     style = MaterialTheme.typography.titleLarge
                 )
             }
 
-            Spacer(modifier = Modifier.height(30.dp))
+            Spacer(modifier = Modifier.height(20.dp))
 
             Text(
                 text = "Seleccione su Mascota",
@@ -95,6 +95,9 @@ class PantallaSelecionarMascota : ComponentActivity() {
                 fontSize = 20.sp,
                 textAlign = TextAlign.Center,
                 style = MaterialTheme.typography.titleLarge,
+                fontWeight = FontWeight.Bold,
+             //   fontFamily = FontFamily.Serif,
+                fontFamily = FontFamily.Monospace,
                 color = colorResource(id = R.color.AzulApp)
             )
 

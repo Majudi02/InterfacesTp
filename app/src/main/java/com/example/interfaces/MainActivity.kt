@@ -39,6 +39,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
@@ -57,7 +58,7 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    val contextAplication= LocalContext.current.applicationContext
+                    val contextAplication = LocalContext.current.applicationContext
                     LoginScreen(contextAplication)
 
                 }
@@ -82,24 +83,35 @@ fun LoginScreen(contextAplication: Context) {
         Text(
             "Bienvenido a la veterinaria",
             modifier = Modifier
-                .align(Alignment.CenterHorizontally),
+                .align(Alignment.CenterHorizontally)
+                .padding(start = 8.dp, end = 8.dp),
             fontSize = 23.sp,
             textAlign = TextAlign.Center,
             fontWeight = FontWeight.Bold,
-            style = MaterialTheme.typography.titleLarge
+            style = MaterialTheme.typography.titleLarge,
+            //  fontFamily = FontFamily.Serif,
+            fontFamily = FontFamily.Monospace,
+            color = colorResource(id = R.color.AzulApp)
 
-            )
-        Text(text = "Nombre",
+        )
+        Text(
+            text = "Nombre",
             modifier = Modifier
                 .align(Alignment.CenterHorizontally),
             fontSize = 23.sp,
             textAlign = TextAlign.Center,
             fontWeight = FontWeight.Bold,
-            style = MaterialTheme.typography.titleLarge)
+            style = MaterialTheme.typography.titleLarge,
+            //  fontFamily = FontFamily.Serif,
+            fontFamily = FontFamily.Monospace,
+            color = colorResource(id = R.color.AzulApp)
+        )
+
 
         Spacer(modifier = Modifier.height(30.dp))
         Image(
-            painterResource(id = androidx.core.R.drawable.ic_call_answer_low), contentDescription = "Logo",
+            painterResource(id = androidx.core.R.drawable.ic_call_answer_low),
+            contentDescription = "Logo",
             modifier = Modifier
                 .size(120.dp)
                 .align(Alignment.CenterHorizontally)
@@ -133,9 +145,9 @@ fun LoginScreen(contextAplication: Context) {
             colors = ButtonDefaults.buttonColors(colorResource(id = R.color.AzulApp)),
             onClick = {
                 val intent = Intent(contextAplication, PantallaSelecionarMascota::class.java)
-                intent.flags=Intent.FLAG_ACTIVITY_NEW_TASK
+                intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
                 contextAplication.startActivity(intent)
-                      },
+            },
 
 
             modifier = Modifier
