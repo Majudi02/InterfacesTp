@@ -81,7 +81,7 @@ class PantallaPrincipal : ComponentActivity() {
                 fontWeight = FontWeight.Bold,
                 fontSize = 22.sp
             )
-            Spacer(modifier = Modifier.height(5.dp))
+            Spacer(modifier = Modifier.height(10.dp))
             Image(
                 painterResource(id = R.drawable.perro_perfil),
                 contentDescription = "",
@@ -92,7 +92,7 @@ class PantallaPrincipal : ComponentActivity() {
             )
 
 
-            Spacer(modifier = Modifier.height(70.dp))
+            Spacer(modifier = Modifier.height(50.dp))
 
             Column(
                 modifier = Modifier
