@@ -43,6 +43,7 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.interfaces.ui.theme.InterfacesTheme
@@ -81,7 +82,7 @@ fun LoginScreen(contextAplication: Context) {
     ) {
         Spacer(modifier = Modifier.height(40.dp))
         Text(
-            "Bienvenido a la veterinaria",
+            "Bienvenidx",
             modifier = Modifier
                 .align(Alignment.CenterHorizontally)
                 .padding(start = 8.dp, end = 8.dp),
@@ -94,7 +95,7 @@ fun LoginScreen(contextAplication: Context) {
             color = colorResource(id = R.color.AzulApp)
 
         )
-        Text(
+        /*Text(
             text = "Nombre",
             modifier = Modifier
                 .align(Alignment.CenterHorizontally),
@@ -105,26 +106,26 @@ fun LoginScreen(contextAplication: Context) {
             //  fontFamily = FontFamily.Serif,
             fontFamily = FontFamily.Monospace,
             color = colorResource(id = R.color.AzulApp)
-        )
+        )*/
 
 
-        Spacer(modifier = Modifier.height(30.dp))
+        Spacer(modifier = Modifier.height(15.dp))
         Image(
-            painterResource(id = androidx.core.R.drawable.ic_call_answer_low),
+            painterResource(id = R.drawable.img_logo_veterinaria),
             contentDescription = "Logo",
             modifier = Modifier
-                .size(120.dp)
+                .size(300.dp)
                 .align(Alignment.CenterHorizontally)
         )
 
-        Spacer(modifier = Modifier.height(46.dp))
+        Spacer(modifier = Modifier.height(0.dp))
         OutlinedTextField(
             value = username,
             onValueChange = { username = it },
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(16.dp),
-            label = { Text("DNI") },
+            label = { Text("Ingrese su número de usuario o DNI") },
             keyboardOptions = KeyboardOptions.Default.copy(keyboardType = KeyboardType.Number)
         )
 
@@ -136,7 +137,7 @@ fun LoginScreen(contextAplication: Context) {
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(16.dp),
-            label = { Text("Contraseña") },
+            label = { Text("Ingrese su contraseña") },
         )
 
         Spacer(modifier = Modifier.height(36.dp))
@@ -162,7 +163,13 @@ fun LoginScreen(contextAplication: Context) {
 
 
     }
+
 }
+    @Preview(showSystemUi = true, showBackground = true)
+    @Composable
+    fun LoginScreenPreview() {
+        LoginScreen( contextAplication= LocalContext.current.applicationContext)
+    }
 
 
 
