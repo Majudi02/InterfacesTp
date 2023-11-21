@@ -6,6 +6,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -21,6 +22,8 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowDropDown
+import androidx.compose.material3.Button
+import androidx.compose.material3.CardElevation
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ExposedDropdownMenuBox
@@ -105,7 +108,7 @@ class PantallaPrincipal : ComponentActivity() {
                     .height(90.dp)
                     .padding(vertical = 10.dp)
                     .background(
-                        color = Color.LightGray, shape = RoundedCornerShape(20.dp)
+                        color = MaterialTheme.colorScheme.primary, shape = RoundedCornerShape(20.dp)
                     )
                     .clickable {
                         startActivity(
@@ -118,7 +121,10 @@ class PantallaPrincipal : ComponentActivity() {
                         text = "Pedir Turno",
                         modifier = Modifier.align(Alignment.Center),
                         fontSize = 20.sp,
-                        fontFamily = FontFamily.Default
+                        color = MaterialTheme.colorScheme.onPrimary
+
+
+
                     )
                 }
 
@@ -135,14 +141,13 @@ class PantallaPrincipal : ComponentActivity() {
                             .height(90.dp)
                             .padding(start = 5.dp)
                             .background(
-                                color = Color.LightGray, shape = RoundedCornerShape(20.dp)
+                                color = MaterialTheme.colorScheme.primaryContainer,shape = RoundedCornerShape(20.dp)
                             )
                     ) {
                         Text(
                             text = "Laboratorios",
                             modifier = Modifier.align(Alignment.Center),
-                            fontSize = 18.sp,
-                            fontFamily = FontFamily.Default
+                            color = MaterialTheme.colorScheme.onPrimaryContainer
                         )
                     }
 
@@ -153,7 +158,7 @@ class PantallaPrincipal : ComponentActivity() {
                             .weight(1f)
                             .height(90.dp)
                             .background(
-                                color = Color.LightGray, shape = RoundedCornerShape(20.dp)
+                                 color = MaterialTheme.colorScheme.primaryContainer,shape = RoundedCornerShape(20.dp)
                             )
                     ) {
                         Text(
@@ -161,8 +166,8 @@ class PantallaPrincipal : ComponentActivity() {
                             modifier = Modifier
                                 .align(Alignment.Center)
                                 .padding(start = 5.dp),
-                            fontSize = 18.sp,
-                            fontFamily = FontFamily.Default
+                            color = MaterialTheme.colorScheme.onPrimaryContainer
+
                         )
                     }
 
@@ -173,25 +178,26 @@ class PantallaPrincipal : ComponentActivity() {
                             .weight(1f)
                             .height(90.dp)
                             .background(
-                                color = Color.LightGray, shape = RoundedCornerShape(20.dp)
+                                 color = MaterialTheme.colorScheme.primaryContainer,shape = RoundedCornerShape(20.dp)
                             )
                     ) {
                         Text(
                             text = "Historia Clínica",
                             modifier = Modifier.align(Alignment.Center),
-                            fontSize = 15.sp,
-                            fontFamily = FontFamily.Default
+                            color = MaterialTheme.colorScheme.onPrimaryContainer
                         )
                     }
                 }
                 Spacer(modifier = Modifier.height(45.dp))
 
+
                 Box(
                     modifier = Modifier
                         .fillMaxSize()
-                        .background(color = Color.Transparent)
+                        .padding(6.dp)
+                        .background(MaterialTheme.colorScheme.surfaceVariant, shape = RoundedCornerShape(20.dp))
                 ) {
-                    Column(modifier = Modifier.align(Alignment.TopStart)) {
+                    Column(modifier = Modifier.align(Alignment.TopStart).padding(12.dp)) {
                         Text(
                             text = "Proximos Turnos",
                             fontSize = 20.sp,
@@ -231,7 +237,8 @@ class PantallaPrincipal : ComponentActivity() {
 
     }
 
-    @Preview(showSystemUi = true, showBackground = true)
+    @Preview(showSystemUi = true, showBackground = true, device = "id:pixel_3a",
+       )
     @Composable
     fun PantallaPrincipalScreenPreview() {
         PantallaPrincipalScreen()

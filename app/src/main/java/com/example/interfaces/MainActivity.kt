@@ -7,6 +7,7 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -18,6 +19,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.ColorScheme
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ExposedDropdownMenuBox
@@ -44,6 +46,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.interfaces.ui.theme.InterfacesTheme
@@ -92,7 +95,7 @@ fun LoginScreen(contextAplication: Context) {
             style = MaterialTheme.typography.titleLarge,
             //  fontFamily = FontFamily.Serif,
             fontFamily = FontFamily.Monospace,
-            color = colorResource(id = R.color.AzulApp)
+            color = MaterialTheme.colorScheme.primary
 
         )
         /*Text(
@@ -143,8 +146,8 @@ fun LoginScreen(contextAplication: Context) {
         Spacer(modifier = Modifier.height(36.dp))
 
         Button(
-            colors = ButtonDefaults.buttonColors(colorResource(id = R.color.AzulApp)),
             onClick = {
+
                 val intent = Intent(contextAplication, PantallaSelecionarMascota::class.java)
                 intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
                 contextAplication.startActivity(intent)
@@ -155,6 +158,7 @@ fun LoginScreen(contextAplication: Context) {
                 .fillMaxWidth()
                 .height(50.dp)
                 .padding(start = 16.dp, end = 16.dp)
+                .background(MaterialTheme.colorScheme.background)
         ) {
             Text("Iniciar sesion")
         }
@@ -165,7 +169,7 @@ fun LoginScreen(contextAplication: Context) {
     }
 
 }
-    @Preview(showSystemUi = true, showBackground = true)
+    @Preview(showSystemUi = true, showBackground = true,)
     @Composable
     fun LoginScreenPreview() {
         LoginScreen( contextAplication= LocalContext.current.applicationContext)

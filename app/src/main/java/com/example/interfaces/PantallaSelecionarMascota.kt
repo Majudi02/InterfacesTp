@@ -8,6 +8,7 @@ import androidx.activity.compose.setContent
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -17,30 +18,43 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.outlined.ExitToApp
+import androidx.compose.material.icons.outlined.ExitToApp
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ExposedDropdownMenuBox
 import androidx.compose.material3.ExposedDropdownMenuDefaults
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.TopAppBarColors
+import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -68,43 +82,48 @@ class PantallaSelecionarMascota : ComponentActivity() {
     @OptIn(ExperimentalMaterial3Api::class)
     @Composable
     fun SelecionarMascota() {
-        Scaffold(modifier = Modifier.background(color=colorResource(id = R.color.AzulApp)),
+        Scaffold(modifier = Modifier.background(MaterialTheme.colorScheme.primary),
             topBar = {
                 TopAppBar(title = {
-                    Text(
-                        text = "Seleccione su Mascota", fontSize = 20.sp,
-                        textAlign = TextAlign.Center,
-                        style = MaterialTheme.typography.titleLarge,
-                        fontWeight = FontWeight.Bold,
-                        //   fontFamily = FontFamily.Serif,
-                        fontFamily = FontFamily.Monospace,
-                        color=colorResource(id =R.color.AzulApp )
+                    Row ( horizontalArrangement = Arrangement.Start,
+                        verticalAlignment = Alignment.CenterVertically) {
+                        Image(
+                            painter= painterResource(id = R.drawable.profile),
+                            contentDescription = "Foto de perfil por defecto",
+                            modifier = Modifier
+                                .padding(end = 8.dp)
+                                .size(40.dp)
+                                .clip(CircleShape)
+                        )
+                        Text(
+                            text = "Bienvenido Rigoberto",
+                            modifier = Modifier.padding(start = 5.dp),
+                            fontSize = 16.sp,
+                            textAlign = TextAlign.Center,
+                            style = MaterialTheme.typography.titleLarge
+                        )
+                    }
+
+                }, actions = {
+                    IconButton(
+                        onClick = {
+                          //  showDialog = true
+                        }
+                    ) {
+                        Icon(Icons.AutoMirrored.Outlined.ExitToApp, contentDescription = "Cerrar sesión")
+                    }
+                },
+                    //TODO@me
+                    //colors = MaterialTheme.colorScheme.primary
                     )
-                })
             }
         ) {
             Column(
                 modifier = Modifier
-                    .fillMaxSize()
             ) {
                 Spacer(modifier = Modifier.height(10.dp))
 
-            /*    Row {
-                    Image(
-                        painterResource(id = R.drawable.perfil),
-                        contentDescription = "",
-                        modifier = Modifier
-                            .size(70.dp)
-                            .padding(start = 15.dp)
-                    )
-                    Text(
-                        text = "Bienvenido Rigoberto",
-                        modifier = Modifier.padding(start = 5.dp, top = 20.dp),
-                        fontSize = 16.sp,
-                        textAlign = TextAlign.Center,
-                        style = MaterialTheme.typography.titleLarge
-                    )
-                }
+            /*
 
              */
 
@@ -121,9 +140,8 @@ class PantallaSelecionarMascota : ComponentActivity() {
                     fontWeight = FontWeight.Bold,
                     //   fontFamily = FontFamily.Serif,
                     fontFamily = FontFamily.Monospace,
-                    color = colorResource(id = R.color.AzulApp)
-                )
-
+                    color = MaterialTheme.colorScheme.onBackground
+                    )
                 Spacer(modifier = Modifier.height(40.dp))
 
                 Row(
