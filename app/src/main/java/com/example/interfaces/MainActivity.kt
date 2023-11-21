@@ -147,13 +147,10 @@ fun LoginScreen(contextAplication: Context) {
 
         Button(
             onClick = {
-
                 val intent = Intent(contextAplication, PantallaSelecionarMascota::class.java)
                 intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
                 contextAplication.startActivity(intent)
             },
-
-
             modifier = Modifier
                 .fillMaxWidth()
                 .height(50.dp)

@@ -84,38 +84,50 @@ class PantallaSelecionarMascota : ComponentActivity() {
     fun SelecionarMascota() {
         Scaffold(modifier = Modifier.background(MaterialTheme.colorScheme.primary),
             topBar = {
-                TopAppBar(title = {
-                    Row ( horizontalArrangement = Arrangement.Start,
-                        verticalAlignment = Alignment.CenterVertically) {
-                        Image(
-                            painter= painterResource(id = R.drawable.profile),
-                            contentDescription = "Foto de perfil por defecto",
-                            modifier = Modifier
-                                .padding(end = 8.dp)
-                                .size(40.dp)
-                                .clip(CircleShape)
-                        )
-                        Text(
-                            text = "Selecciona tu Mascota",
-                            modifier = Modifier.padding(start = 5.dp),
-                            fontSize = 20.sp,
-                            textAlign = TextAlign.Center,
-                            style = MaterialTheme.typography.titleLarge
-                        )
-                    }
-
-                }, actions = {
-                    IconButton(
-                        onClick = {
-                          //  showDialog = true
+                TopAppBar(
+                    title = {
+                        Row(
+                            horizontalArrangement = Arrangement.Start,
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            Image(
+                                painter = painterResource(id = R.drawable.profile),
+                                contentDescription = "Foto de perfil por defecto",
+                                modifier = Modifier
+                                    .padding(end = 8.dp)
+                                    .size(40.dp)
+                                    .clip(CircleShape)
+                            )
+                            Text(
+                                text = "Selecciona tu Mascota",
+                                modifier = Modifier.padding(start = 5.dp),
+                                fontSize = 20.sp,
+                                textAlign = TextAlign.Center,
+                                style = MaterialTheme.typography.titleLarge
+                            )
                         }
-                    ) {
-                        Icon(Icons.AutoMirrored.Outlined.ExitToApp, contentDescription = "Cerrar sesión")
-                    }
-                },
+
+                    },
+                    actions = {
+                        IconButton(
+                            onClick = {
+                                startActivity(
+                                    Intent(
+                                        this@PantallaSelecionarMascota,
+                                        MainActivity::class.java
+                                    )
+                                )
+                            }
+                        ) {
+                            Icon(
+                                Icons.AutoMirrored.Outlined.ExitToApp,
+                                contentDescription = "Cerrar sesión"
+                            )
+                        }
+                    },
                     //TODO@me
                     //colors = MaterialTheme.colorScheme.primary
-                    )
+                )
             }
         ) {
             Column(
@@ -123,9 +135,9 @@ class PantallaSelecionarMascota : ComponentActivity() {
             ) {
                 Spacer(modifier = Modifier.height(10.dp))
 
-            /*
+                /*
 
-             */
+                 */
 
                 Spacer(modifier = Modifier.height(20.dp))
 
@@ -141,7 +153,7 @@ class PantallaSelecionarMascota : ComponentActivity() {
                     //   fontFamily = FontFamily.Serif,
                     fontFamily = FontFamily.Monospace,
                     color = MaterialTheme.colorScheme.onBackground
-                    )
+                )
                 Spacer(modifier = Modifier.height(40.dp))
 
                 Row(
@@ -268,6 +280,7 @@ class PantallaSelecionarMascota : ComponentActivity() {
             }
         }
     }
+
     @Preview(showSystemUi = true, showBackground = true)
     @Composable
     fun SeleccionarMascotaScreenPreview() {

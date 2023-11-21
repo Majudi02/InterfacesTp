@@ -90,7 +90,7 @@ class PantallaPrincipal : ComponentActivity() {
                 painterResource(id = R.drawable.perro_perfil),
                 contentDescription = "",
                 modifier = Modifier
-                    .size(160.dp)
+                    .size(170.dp)
                     .fillMaxWidth()
                     .align(Alignment.CenterHorizontally)
             )
@@ -105,7 +105,7 @@ class PantallaPrincipal : ComponentActivity() {
             ) {
                 Box(modifier = Modifier
                     .fillMaxWidth()
-                    .height(90.dp)
+                    .height(100.dp)
                     .padding(vertical = 10.dp)
                     .background(
                         color = MaterialTheme.colorScheme.primary, shape = RoundedCornerShape(20.dp)
@@ -179,11 +179,12 @@ class PantallaPrincipal : ComponentActivity() {
                             .height(90.dp)
                             .background(
                                  color = MaterialTheme.colorScheme.primaryContainer,shape = RoundedCornerShape(20.dp)
-                            )
+                            ),
+                        contentAlignment = Alignment.Center
                     ) {
                         Text(
                             text = "Historia Clínica",
-                            modifier = Modifier.align(Alignment.Center),
+                            modifier = Modifier.padding(start=25.dp),
                             color = MaterialTheme.colorScheme.onPrimaryContainer
                         )
                     }
