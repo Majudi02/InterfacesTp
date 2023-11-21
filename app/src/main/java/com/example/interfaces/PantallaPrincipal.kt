@@ -174,6 +174,7 @@ class PantallaPrincipal : ComponentActivity() {
                     Spacer(modifier = Modifier.width(10.dp))
 
                     Box(
+                        contentAlignment = Alignment.Center,
                         modifier = Modifier
                             .weight(1f)
                             .height(90.dp)
@@ -183,7 +184,7 @@ class PantallaPrincipal : ComponentActivity() {
                     ) {
                         Text(
                             text = "Historia Clínica",
-                            modifier = Modifier.align(Alignment.Center),
+                            modifier = Modifier.padding(start=25.dp),
                             color = MaterialTheme.colorScheme.onPrimaryContainer
                         )
                     }

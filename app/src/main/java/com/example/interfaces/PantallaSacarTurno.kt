@@ -1,5 +1,6 @@
 package com.example.interfaces
 
+import android.annotation.SuppressLint
 import android.os.Build
 import android.os.Bundle
 import android.view.ViewGroup
@@ -37,6 +38,7 @@ import androidx.compose.material3.TextButton
 import androidx.compose.material3.TextField
 import androidx.compose.material3.rememberDatePickerState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -47,6 +49,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
@@ -56,8 +59,11 @@ import androidx.compose.ui.viewinterop.AndroidView
 import androidx.compose.ui.window.Dialog
 import com.example.interfaces.ui.theme.InterfacesTheme
 import kotlinx.coroutines.launch
+import java.text.SimpleDateFormat
 import java.time.LocalDate
 import java.util.Calendar
+import java.util.Date
+import java.util.Locale
 
 
 class PantallaSacarTurno : ComponentActivity() {
@@ -92,8 +98,8 @@ class PantallaSacarTurno : ComponentActivity() {
             Box(
                 modifier = Modifier
                     .height(100.dp)
-                    .fillMaxWidth()
-                    //        .clip(RoundedCornerShape(16.dp))
+                    .fillMaxWidth().background(colorResource(id = R.color.AzulApp))
+
 
             ) {
                 Text(
@@ -101,6 +107,7 @@ class PantallaSacarTurno : ComponentActivity() {
                     fontSize = 25.sp,
                     fontWeight = FontWeight.Bold,
                     fontFamily = FontFamily.Monospace,
+                    color= Color.White,
                     modifier = Modifier
                         .align(Alignment.CenterStart)
                         .padding(start = 15.dp, end = 10.dp)
@@ -110,8 +117,8 @@ class PantallaSacarTurno : ComponentActivity() {
             SelectEspecialidad()
             Spacer(modifier = Modifier.height(10.dp))
             SelectDoctor()
-            Spacer(modifier = Modifier.height(7.dp))
-            Calendario2()
+            Spacer(modifier = Modifier.height(10.dp))
+            test()
             Spacer(modifier = Modifier.height(10.dp))
             horarios()
 
@@ -134,7 +141,7 @@ class PantallaSacarTurno : ComponentActivity() {
 
     @OptIn(ExperimentalMaterial3Api::class)
     @Composable
-    fun horarios(){
+    fun horarios() {
         val context = LocalContext.current
         val specialties = arrayOf("13:00", "14:15", "14:45", "17:30")
         var expanded by remember { mutableStateOf(false) }
@@ -185,6 +192,123 @@ class PantallaSacarTurno : ComponentActivity() {
             }
         }
     }
+
+
+    @SuppressLint("UnrememberedMutableState")
+    @OptIn(ExperimentalMaterial3Api::class)
+    @Composable
+    fun test() {
+        var date by remember { mutableStateOf("") }
+        var isDropdownMenuVisible by remember { mutableStateOf(false) }
+        var isTextVisible by remember { mutableStateOf(false) }
+
+
+        Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+
+            val state = rememberDatePickerState(initialDisplayMode = DisplayMode.Picker)
+
+            val snackState = remember { SnackbarHostState() }
+            val snackScope = rememberCoroutineScope()
+            SnackbarHost(hostState = snackState, Modifier)
+            val openDialog = remember { mutableStateOf(true) }
+            if (openDialog.value) {
+                val datePickerState = rememberDatePickerState()
+                val confirmEnabled = derivedStateOf { datePickerState.selectedDateMillis != null }
+
+                Button(
+                    onClick = {
+                        isDropdownMenuVisible = !isDropdownMenuVisible
+                        isTextVisible = false // Ocultar el texto cuando se toca el botón
+                    },
+                    modifier = Modifier
+                        .padding(20.dp)
+                        .background(MaterialTheme.colorScheme.background)
+                ) {
+                    Text("Seleccionar fecha")
+                }
+
+                LaunchedEffect(datePickerState.selectedDateMillis) {
+                    date = datePickerState.selectedDateMillis?.let { timestamp ->
+                        val selectedDate = Date(timestamp)
+                        val dateFormat = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
+                        dateFormat.format(selectedDate)
+                    } ?: ""
+                }
+
+                /*     if (isTextVisible) {
+                    Text(
+                        text = "Fecha seleccionada: $date",
+                        modifier = Modifier.padding(start = 24.dp)
+                    )
+                } */
+
+                DropdownMenu(
+                    expanded = isDropdownMenuVisible,
+                    onDismissRequest = {
+                        isDropdownMenuVisible = false
+                        isTextVisible = true
+                    }
+                ) {
+                    DatePickerDialog(
+                        onDismissRequest = {
+                            openDialog.value = false
+                        },
+                        confirmButton = {
+                            /*       TextButton(
+                                modifier = Modifier.background(MaterialTheme.colorScheme.primary),
+                                onClick = {
+                                    openDialog.value = false
+                                    snackScope.launch {
+                                        snackState.showSnackbar(
+                                            "Selected date timestamp: ${datePickerState.selectedDateMillis}"
+                                        )
+                                    }
+                                },
+                                enabled = confirmEnabled.value
+                            ) {*/
+                            isTextVisible = true
+                            Text(
+                                "OK",
+                                modifier = Modifier
+                                    .padding(end = 10.dp)
+                                    .background(color = colorResource(id = androidx.appcompat.R.color.abc_background_cache_hint_selector_material_light)),
+                                color = Color.Black
+                            )
+                            //     }
+                        },
+                        dismissButton = {
+                            TextButton(
+                                onClick = {
+                                    openDialog.value = false
+                                }
+                            ) {
+                                Text(
+                                    "Cancel",
+                                    Modifier.background(MaterialTheme.colorScheme.primary),
+                                    color = Color.Black
+                                )
+                            }
+                        }
+                    ) {
+                        DatePicker(
+                            state = datePickerState,
+                            modifier = Modifier.padding(16.dp),
+                            showModeToggle = false
+                        )
+                    }
+
+                }
+            }
+
+            if (isTextVisible) {
+                Text("Fecha seleccionada: $date", modifier = Modifier.padding(start = 26.dp))
+            }
+        }
+
+    }
+
+
+    @SuppressLint("UnrememberedMutableState")
     @OptIn(ExperimentalMaterial3Api::class)
     @Composable
     fun Calendario2() {
@@ -220,7 +344,7 @@ class PantallaSacarTurno : ComponentActivity() {
                     },
                     confirmButton = {
                         TextButton(
-                            modifier= Modifier.background(MaterialTheme.colorScheme.primary),
+                            modifier = Modifier.background(MaterialTheme.colorScheme.primary),
                             onClick = {
                                 openDialog.value = false
                                 snackScope.launch {
@@ -231,7 +355,11 @@ class PantallaSacarTurno : ComponentActivity() {
                             },
                             enabled = confirmEnabled.value
                         ) {
-                            Text("OK",modifier= Modifier.background(MaterialTheme.colorScheme.onPrimary))
+                            Text(
+                                "OK",
+                                modifier = Modifier.background(MaterialTheme.colorScheme.onPrimary),
+                                color = Color.White
+                            )
                         }
                     },
                     dismissButton = {
@@ -240,11 +368,15 @@ class PantallaSacarTurno : ComponentActivity() {
                                 openDialog.value = false
                             }
                         ) {
-                            Text("Cancel",Modifier.background(MaterialTheme.colorScheme.primary))
+                            Text("Cancel", Modifier.background(MaterialTheme.colorScheme.primary))
                         }
                     }
                 ) {
-                    DatePicker(state = datePickerState, modifier = Modifier.padding(16.dp),showModeToggle = false)
+                    DatePicker(
+                        state = datePickerState,
+                        modifier = Modifier.padding(16.dp),
+                        showModeToggle = false
+                    )
                 }
             }
 
@@ -309,9 +441,9 @@ class PantallaSacarTurno : ComponentActivity() {
             }
 
             DropdownMenu(
-                modifier = Modifier.background(MaterialTheme.colorScheme.background
-                )
-                    ,
+                modifier = Modifier.background(
+                    MaterialTheme.colorScheme.background
+                ),
                 expanded = isDropdownMenuVisible,
                 onDismissRequest = {
                     isDropdownMenuVisible = false
@@ -331,7 +463,7 @@ class PantallaSacarTurno : ComponentActivity() {
     @RequiresApi(Build.VERSION_CODES.O)
     @Composable
     fun calendario(date: String, onDateSelected: (String) -> Unit) {
-        Column(){
+        Column() {
 
             AndroidView(
                 factory = { context ->
@@ -465,7 +597,8 @@ class PantallaSacarTurno : ComponentActivity() {
                     trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = expanded) },
                     modifier = Modifier
                         .fillMaxWidth()
-                        .menuAnchor()                )
+                        .menuAnchor()
+                )
 
                 ExposedDropdownMenu(
                     expanded = expanded,
