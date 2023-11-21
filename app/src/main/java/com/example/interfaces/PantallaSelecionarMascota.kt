@@ -96,9 +96,9 @@ class PantallaSelecionarMascota : ComponentActivity() {
                                 .clip(CircleShape)
                         )
                         Text(
-                            text = "Bienvenido Rigoberto",
+                            text = "Selecciona tu Mascota",
                             modifier = Modifier.padding(start = 5.dp),
-                            fontSize = 16.sp,
+                            fontSize = 20.sp,
                             textAlign = TextAlign.Center,
                             style = MaterialTheme.typography.titleLarge
                         )
@@ -159,7 +159,7 @@ class PantallaSelecionarMascota : ComponentActivity() {
                         painterResource(id = R.drawable.perro_perfil),
                         contentDescription = "",
                         modifier = Modifier
-                            .size(180.dp)
+                            .size(150.dp)
                             .padding(start = 10.dp)
 
                     )
@@ -194,7 +194,7 @@ class PantallaSelecionarMascota : ComponentActivity() {
                         painterResource(id = R.drawable.gato_perfil),
                         contentDescription = "",
                         modifier = Modifier
-                            .size(180.dp)
+                            .size(150.dp)
                             .padding(start = 10.dp)
 
                     )
