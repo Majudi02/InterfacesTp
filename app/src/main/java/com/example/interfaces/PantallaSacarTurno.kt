@@ -23,6 +23,7 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.DatePicker
 import androidx.compose.material3.DatePickerDialog
+import androidx.compose.material3.DatePickerFormatter
 import androidx.compose.material3.DisplayMode
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
@@ -98,7 +99,8 @@ class PantallaSacarTurno : ComponentActivity() {
             Box(
                 modifier = Modifier
                     .height(100.dp)
-                    .fillMaxWidth().background(colorResource(id = R.color.AzulApp))
+                    .fillMaxWidth()
+                    .background(colorResource(id = R.color.AzulApp))
 
 
             ) {
@@ -118,7 +120,8 @@ class PantallaSacarTurno : ComponentActivity() {
             Spacer(modifier = Modifier.height(10.dp))
             SelectDoctor()
             Spacer(modifier = Modifier.height(10.dp))
-            test()
+            //test()
+            DatePickerDisplayModeInput()
             Spacer(modifier = Modifier.height(10.dp))
             horarios()
 
@@ -138,7 +141,29 @@ class PantallaSacarTurno : ComponentActivity() {
 
         }
     }
+    @OptIn(ExperimentalMaterial3Api::class)
+    @Composable
+    fun DatePickerSimple(){
+        Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+            // Pre-select a date for January 4, 2020
+            val datePickerState = rememberDatePickerState(initialSelectedDateMillis = System.currentTimeMillis())
+            DatePicker(state = datePickerState, modifier = Modifier.padding(16.dp))
 
+            Text("Selected date timestamp: ${datePickerState.selectedDateMillis ?: "no selection"}")
+        }
+    }
+
+
+    @OptIn(ExperimentalMaterial3Api::class)
+    @Composable
+    fun DatePickerDisplayModeInput(){
+        Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+            val state = rememberDatePickerState(initialSelectedDateMillis = System.currentTimeMillis(),initialDisplayMode = DisplayMode.Input)
+            DatePicker(state = state, modifier = Modifier.padding(16.dp))
+
+            Text("Entered date timestamp: ${(state.selectedDateMillis) ?: "no input"}")
+        }
+    }
     @OptIn(ExperimentalMaterial3Api::class)
     @Composable
     fun horarios() {
@@ -685,6 +710,8 @@ class PantallaSacarTurno : ComponentActivity() {
             modifier = Modifier.background(Color.White) // Ajusta el color de fondo del Text
         )
     }
+
+
 
     @RequiresApi(Build.VERSION_CODES.O)
     @Preview(showSystemUi = true, showBackground = true)
