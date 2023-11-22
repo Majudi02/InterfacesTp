@@ -1,7 +1,5 @@
 package com.example.interfaces
 
-import android.annotation.SuppressLint
-import android.content.Context
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
@@ -12,22 +10,15 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.layout.widthIn
+import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.DatePickerDialog
-import androidx.compose.material3.DatePickerState
-import androidx.compose.material3.DisplayMode
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -38,17 +29,13 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.TextField
-import androidx.compose.material3.rememberDatePickerState
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
-import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
@@ -60,14 +47,8 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.compose.ui.window.Dialog
 import com.example.interfaces.ui.theme.InterfacesTheme
-import java.text.SimpleDateFormat
 import java.time.LocalDate
-import java.time.LocalDateTime
-import java.time.ZoneId
-import java.time.ZonedDateTime
 import java.util.Calendar
-import java.util.Locale
-import java.util.concurrent.TimeUnit
 
 
 class PantallaSacarTurno : ComponentActivity() {
@@ -91,9 +72,19 @@ class PantallaSacarTurno : ComponentActivity() {
         }
     }
 
+    @OptIn(ExperimentalMaterial3Api::class)
     @RequiresApi(Build.VERSION_CODES.O)
     @Composable
     fun Screen() {
+        var showDialog by remember {
+            mutableStateOf(false)
+        }
+
+        var horaDialog by remember { mutableStateOf("") }
+        var especialodadDialog by remember { mutableStateOf("") }
+        var doctorDialog by remember { mutableStateOf("") }
+        var diaDialog by remember { mutableStateOf("") }
+
         Column(
             modifier = Modifier
                 .fillMaxSize()
@@ -110,26 +101,216 @@ class PantallaSacarTurno : ComponentActivity() {
                     fontSize = 25.sp,
                     fontWeight = FontWeight.Bold,
                     fontFamily = FontFamily.Monospace,
-                    color= Color.White,
+                    color = Color.White,
                     modifier = Modifier
                         .align(Alignment.CenterStart)
                         .padding(start = 15.dp, end = 10.dp)
                 )
             }
             Spacer(modifier = Modifier.height(10.dp))
-            SelectEspecialidad()
-            Spacer(modifier = Modifier.height(10.dp))
-            SelectDoctor()
-            Spacer(modifier = Modifier.height(7.dp))
-            Calendario()
-            Spacer(modifier = Modifier.height(10.dp))
-            horarios()
+            val context23 = LocalContext.current
+            val listaEspecialidades = arrayOf("General")
+            var expanded by remember { mutableStateOf(false) }
+            var selectedSpecialty by remember { mutableStateOf("Seleccione una Especialidad") }
 
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(20.dp)
+            ) {
+                ExposedDropdownMenuBox(
+                    expanded = expanded,
+                    onExpandedChange = {
+                        expanded = !expanded
+                    }
+                ) {
+                    TextField(
+                        value = selectedSpecialty,
+                        onValueChange = {},
+                        label = {
+                            Text(text = "Especialidad")
+                        },
+                        readOnly = true,
+                        trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = expanded) },
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .menuAnchor()
+                    )
+
+                    ExposedDropdownMenu(
+                        expanded = expanded,
+                        onDismissRequest = { expanded = false }
+                    ) {
+                        listaEspecialidades.forEach { specialty ->
+                            DropdownMenuItem(
+                                text = {
+                                    Text(
+                                        text = specialty,
+                                    )
+                                },
+                                onClick = {
+                                    selectedSpecialty = specialty
+                                    especialodadDialog=selectedSpecialty
+                                    expanded = false
+                                }
+                            )
+                        }
+                    }
+                }
+            }
+            //********************************************************************************************************************************************
+            Spacer(modifier = Modifier.height(10.dp))
+            //********************************************************************************************************************************************
+            val context = LocalContext.current
+            val listaDoctores =
+                arrayOf("Juan Rodriguez", "María Fernández", "Valentina Ramírez", "Alejandro Torres")
+            var expandedDoctores by remember { mutableStateOf(false) }
+            var doctorSeleccionado by remember { mutableStateOf("Seleccione un Medico") }
+
+            Box(
+                modifier = Modifier
+                    .padding(20.dp)
+                    .fillMaxWidth()
+            ) {
+                ExposedDropdownMenuBox(
+                    expanded = expandedDoctores,
+                    onExpandedChange = {
+                        expandedDoctores = !expandedDoctores
+                    }
+                ) {
+                    TextField(
+                        value = doctorSeleccionado,
+                        onValueChange = {},
+                        label = {
+                            Text(text = "Medico")
+                        },
+                        readOnly = true,
+                        trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = expandedDoctores) },
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .menuAnchor()
+                    )
+
+                    ExposedDropdownMenu(
+                        expanded = expandedDoctores,
+                        onDismissRequest = { expandedDoctores = false }
+                    ) {
+                        listaDoctores.forEach { specialty ->
+                            DropdownMenuItem(
+                                text = {
+                                    Text(
+                                        text = specialty,
+                                    )
+                                },
+                                onClick = {
+                                    doctorSeleccionado = specialty
+                                    doctorDialog=doctorSeleccionado
+                                    expandedDoctores = false
+                                }
+                            )
+                        }
+                    }
+                }
+            }
+            //********************************************************************************************************************************************
+            Spacer(modifier = Modifier.height(7.dp))
+            //*******************************************************************************************************************************************
+            var date by remember { mutableStateOf("") }
+            var isDropdownMenuVisibleCalen by remember { mutableStateOf(false) }
+            var isTextVisible by remember { mutableStateOf(false) }
+
+            Column {
+                Button(
+                    onClick = {
+                        isDropdownMenuVisibleCalen = !isDropdownMenuVisibleCalen
+                        isTextVisible = false // Ocultar el texto cuando se toca el botón
+                    },
+                    modifier = Modifier
+                        .padding(20.dp)
+                        .background(MaterialTheme.colorScheme.background)
+                ) {
+                    Text("Seleccionar fecha")
+                }
+
+                if (isTextVisible) {
+                    Text(text = "Fecha seleccionada: $date", modifier = Modifier.padding(start = 24.dp))
+                    diaDialog=date
+                }
+
+                DropdownMenu(
+                    expanded = isDropdownMenuVisibleCalen,
+                    onDismissRequest = {
+                        isDropdownMenuVisibleCalen = false
+                        isTextVisible = true
+                    }
+                ) {
+                    calendario(date = date) {
+                        date = it
+                        isDropdownMenuVisibleCalen = false
+                        isTextVisible = true
+                    }
+                }
+            }
+            //*****************************************************************************************
+            Spacer(modifier = Modifier.height(10.dp))
+            //*****************************************************************************************
+            val contexth = LocalContext.current
+            val horasDisp = arrayOf("13:00", "14:15", "14:45", "17:30")
+            var expanded3 by remember { mutableStateOf(false) }
+            var horaSeleccionada by remember { mutableStateOf("Seleccione un Horario") }
+
+            Box(
+                modifier = Modifier
+                    .padding(20.dp)
+                    .fillMaxWidth()
+            ) {
+                ExposedDropdownMenuBox(
+                    expanded = expanded3,
+                    onExpandedChange = {
+                        expanded3 = !expanded3
+                    }
+                ) {
+                    TextField(
+                        value = horaSeleccionada,
+                        onValueChange = {},
+                        label = {
+                            Text(text = "Horario")
+                        },
+                        readOnly = true,
+                        trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = expanded3) },
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .menuAnchor()
+                    )
+
+                    ExposedDropdownMenu(
+                        expanded = expanded3,
+                        onDismissRequest = { expanded3 = false }
+                    ) {
+                        horasDisp.forEach { specialty ->
+                            DropdownMenuItem(
+                                text = {
+                                    Text(
+                                        text = specialty,
+                                    )
+                                },
+                                onClick = {
+                                    horaSeleccionada = specialty
+                                    horaDialog=horaSeleccionada
+                                    expanded3 = false
+                                }
+                            )
+                        }
+                    }
+                }
+            }
+            //*****************************************************************************************************
             Spacer(modifier = Modifier.height(100.dp))
+            //*****************************************************************************************************
             Button(
-                //  colors = ButtonDefaults.buttonColors(colorResource(id = R.color.AzulApp)),
+
                 onClick = {
-                    /*  */
+                    showDialog = true
                 },
                 modifier = Modifier
                     .fillMaxWidth()
@@ -139,9 +320,43 @@ class PantallaSacarTurno : ComponentActivity() {
             ) {
                 Text("Sacar Turno")
             }
-
+            if (showDialog) {
+                AlertDialog(
+                    onDismissRequest = { showDialog = false },
+                    title = { Text("Confirmar Turno") },
+                 //   text = { Text("Especialidad: General\nHora seleccionada: $horaDialog") },
+                    text = {
+                        Column {
+                            Text(text = "Especialidad: $especialodadDialog")
+                            Text(text = "Doctor: $doctorDialog")
+                            Text(text = "Dia: $diaDialog", fontWeight = FontWeight.Bold)
+                            Text(text = "Hora: $horaDialog", fontWeight = FontWeight.Bold)
+                        }
+                    },
+                    confirmButton = {
+                        TextButton(onClick = {
+                            startActivity(
+                                Intent(
+                                    this@PantallaSacarTurno, PantallaPrincipal::class.java
+                                )
+                            )
+                            showDialog = false
+                        }) {
+                            Text("Confirmar")
+                        }
+                    },
+                    dismissButton = {
+                        TextButton(onClick = {
+                            showDialog = false
+                        }) {
+                            Text("Cancelar")
+                        }
+                    }
+                )
+            }
         }
     }
+
 
     @OptIn(ExperimentalMaterial3Api::class)
     @Composable
